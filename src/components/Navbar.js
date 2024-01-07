@@ -14,9 +14,11 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-// import { makeStyles } from "@material-ui/core/styles";
+import { green } from "@mui/material/colors";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import Stack from "@mui/material/Stack";
 
-const pages = ["HOME", "TOGGLE"];
+const pages = ["HOME"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
@@ -38,28 +40,28 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const inputStyle = {
+    backgroundColor: "white", // Set the background color to white
+  };
+
+  const searchoptions = [
+    "Option 1",
+    "Option 2",
+    "Option 3",
+    "Option 4",
+    "Option 5",
+  ];
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            MY NOTES
-          </Typography>
+          <Stack direction="row" spacing={2}>
+            <Avatar sx={{ bgcolor: green[500], mr: 10 }} variant="rounded">
+              <AssignmentIcon />
+            </Avatar>
+          </Stack>
+          <Typography sx={{ ml: 3 }}>NOTTIES</Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -131,18 +133,26 @@ function ResponsiveAppBar() {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
+            options={searchoptions}
             sx={{ width: 800 }}
-          
-            
             renderInput={(params) => (
-              <TextField {...params} label="Search for a Ticket" />
+              <TextField
+                {...params}
+                InputProps={{
+                  ...params.InputProps,
+                  onClick: (event) => {
+                    params.inputProps.onFocus(event);
+                  },
+                }}
+                style={inputStyle}
+              />
             )}
           />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ ml: 18 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar sx={{ bgcolor: green[500] }}>MK</Avatar>
               </IconButton>
             </Tooltip>
             <Menu
