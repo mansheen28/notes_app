@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,13 +21,15 @@ import Stack from "@mui/material/Stack";
 const pages = ["HOME"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+function ResponsiveAppBar({ onSearchChange }) {
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [searchOptions, setSearchOptions] = useState([]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -41,16 +43,8 @@ function ResponsiveAppBar() {
   };
 
   const inputStyle = {
-    backgroundColor: "white", // Set the background color to white
+    backgroundColor: "white",
   };
-
-  const searchoptions = [
-    "Option 1",
-    "Option 2",
-    "Option 3",
-    "Option 4",
-    "Option 5",
-  ];
 
   return (
     <AppBar position="static">
@@ -133,8 +127,15 @@ function ResponsiveAppBar() {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={searchoptions}
+            options={searchOptions}
             sx={{ width: 800 }}
+            onInputChange={(event, value) => {
+              onSearchChange(value);
+              setSearchOptions((prevOptions) => [
+                value,
+                ...prevOptions.filter((option) => option !== value),
+              ]);
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -183,4 +184,5 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
+
 export default ResponsiveAppBar;
